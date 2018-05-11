@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.camunda.bpm.example.tasks;
+package org.camunda.bpm.example.servicetasks;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -26,6 +26,7 @@ public class CalculateInterestService implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     LOGGER.debug("calculating interest");
+    execution.setVariable("interest_rate", 100.00);
   }
 
 }

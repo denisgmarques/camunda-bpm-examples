@@ -10,15 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.camunda.bpm.example;
-
-import java.io.IOException;
-
-import javax.sql.DataSource;
+package org.camunda.bpm.example.configuration;
 
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.camunda.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
+import org.camunda.bpm.example.configuration.CustomHistoryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +25,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.sql.DataSource;
+import java.io.IOException;
 
 @Configuration
 @Import( SpringProcessEngineServicesConfiguration.class )
@@ -56,6 +56,9 @@ public class CamundaProcessEngineConfiguration {
     config.setTransactionManager(transactionManager());
 
     config.setHistory(historyLevel);
+
+    // History Handler
+    config.setHistoryEventHandler(new CustomHistoryHandler());
 
     config.setJobExecutorActivate(true);
     config.setMetricsEnabled(false);
