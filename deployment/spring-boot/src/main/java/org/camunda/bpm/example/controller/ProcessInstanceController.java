@@ -58,8 +58,6 @@ public class ProcessInstanceController extends BaseApiRestController {
               .processInstanceIdIn(pi.getId())
               .list();
     
-         System.out.println(pi.getId() + " -> " + variables.size());
-
          Map<String, Object> variablesMap = new HashMap<>();
 
          variables.forEach(var -> {
