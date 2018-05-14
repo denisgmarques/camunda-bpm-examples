@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.springframework.org/schema/mvc" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Products - Rest Api</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Products - Rest Api</title>
+    <link th:replace="common/dependencies :: dependencies" />
 </head>
 <body>
 
@@ -12,11 +13,10 @@
             <h1>Turbina Boot - Test Solution - Rest Api</h1>
             <div align="center">
                 <a href="swagger-ui.html" class="btn btn-lg btn-primary">See api documentation here</a>
+                <a href="menu" class="btn btn-lg btn-primary">Menu Page</a>
             </div>
         </div>
     </div>
-	
-	<script src="jquery.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,243 @@
+<html xmlns:th="http://www.springframework.org/schema/mvc" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8" />
+
+        <title>Solution Demo</title>
+
+        <link th:replace="common/dependencies :: dependencies" />
+
+        <script src="menu/menu.js"></script>
+        <link rel="stylesheet" type="text/css" href="menu/menu.css">
+
+    </head>
+    <body>
+        <div id="main" class="container">
+
+            <!-- The navigation menu will get the value of the "active" variable as a class. -->
+
+            <!-- To stops the page from jumping when a link is clicked
+                we use the "prevent" modifier (short for preventDefault). -->
+
+            <nav v-bind:class="active" v-on:click.prevent>
+
+                <!-- When a link in the menu is clicked, we call the makeActive method,
+                defined in the JavaScript Vue instance. It will change the value of "active". -->
+
+                <a href="#" class="home" v-on:click="makeActive('home')">Home</a>
+                <a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a>
+                <a href="#" class="services" v-on:click="makeActive('services')">Services</a>
+                <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>
+            </nav>
+
+            <!-- The mustache expression will be replaced with the value of "active".
+                 It will automatically update to reflect any changes. -->
+
+            <p>You chose <b>{{active}}</b></p>
+
+            <form id="myForm">
+                <div class="container">
+                    <fieldset>
+                        <legend class="font-green">Inclusão de Site</legend>
+                        <div class="row-fluid">
+                            <div class="span7">
+                                <label><strong>CNPJ:</strong></label>
+                                <input type="text" name="cnpj" id="cnpj" class="span4"><span id="erroCNPJ" class="error hide">CNPJ inválido!</span>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span7">
+                                <label><strong>Nome do Local:</strong></label>
+                                <input type="text" name="nome_local" id="nome_local" class="span12 required">
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label><strong>Endereço:</strong></label>
+                                <input type="text" name="endereco" id="endereco" class="span12 required">
+                            </div>
+                            <div class="span2">
+                                <label><strong>Cidade:</strong></label>
+                                <input type="text" name="cidade" id="cidade" class="span12 required">
+                            </div>
+                            <div class="span1">
+                                <label><strong>UF:</strong></label>
+                                <select id="uf" class="combobox span12" name="uf">
+                                    <option value=""></option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+
+                                </select>
+                            </div>
+                            <div class="span2">
+                                <label><strong>CEP:</strong></label>
+                                <input type="text" data-mask="99999-999" name="cep" id="cep" class="span12 required">
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <label><strong>Latitude:</strong></label>
+                                <input type="text" name="latitude" id="latitude" class="input-large">
+                            </div>
+                            <div class="span3">
+                                <label><strong>Longitude:</strong></label>
+                                <input type="text" name="longitude" id="longitude" class="input-large">
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span2">
+                                <label><strong>Telefone:</strong></label>
+                                <input type="text" data-mask="(99) 99999999*" name="telefone" id="telefone" class="span12">
+                            </div>
+                            <div class="span2">
+                                <label><strong>Fax:</strong></label>
+                                <input type="text" data-mask="(99) 99999999*" name="fax" id="fax" class="span12">
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label><strong>E-mail:</strong></label>
+                                <input type="email" name="email" id="email" class="span12">
+                            </div>
+                            <div class="span4">
+                                <label><strong>URL para o site do fornecedor:</strong></label>
+                                <input type="text" name="url" id="url" class="span12">
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <label><strong>Observação</strong></label>
+                                <textarea rows="4" type="text" name="observacao" id="observacao" class="span12"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <input type="button" value="Submit" onclick="sendform()">
+            </form>
+        </div>
+
+        <div class="resource">
+            resource: <a href="http://tutorialzine.com/2016/03/5-practical-examples-for-learning-vue-js/" target="_blank">5 Practical Examples For Learning Vue.js</a>
+        </div>
+    </body>
+
+    <script type="text/javascript" th:inline="javascript">
+    function sendform(){
+        var formData = JSON.stringify($("#myForm").serializeArray());
+
+console.log(formData);
+
+        $.ajax({
+          type: "POST",
+          url: "/api/process/start",
+          data: formData,
+          success: function(data){
+            alert(data);
+          },
+          dataType: "json",
+          contentType : "application/json"
+        });
+    }
+
+    $(function() {
+        var view = this;
+
+        console.log(view);
+
+        $("#cnpj", view.$el).mask("99.999.999/9999-99");
+        $("#latitude", view.$el).mask("99°99\´99.99\"S");
+        $("#longitude", view.$el).mask("99°99\´99.99\"S");
+
+        $("#cnpj", view.$el).blur(function(){
+           if (!validarCNPJ($(this).val())){
+               $("#erroCNPJ", view.el$).show();
+               $(this).focus();
+           } else {
+              $("#erroCNPJ", view.el$).hide();
+           }
+        });
+
+        $(".combobox", view.$el).select2();
+
+        function validarCNPJ(cnpj) {
+
+            if (cnpj !== "") {
+                cnpj = cnpj.replace(/[^\d]+/g,'');
+
+                if(cnpj == '') return false;
+
+                if (cnpj.length != 14)
+                    return false;
+
+                // Elimina CNPJs invalidos conhecidos
+                if (cnpj == "00000000000000" ||
+                    cnpj == "11111111111111" ||
+                    cnpj == "22222222222222" ||
+                    cnpj == "33333333333333" ||
+                    cnpj == "44444444444444" ||
+                    cnpj == "55555555555555" ||
+                    cnpj == "66666666666666" ||
+                    cnpj == "77777777777777" ||
+                    cnpj == "88888888888888" ||
+                    cnpj == "99999999999999")
+                    return false;
+
+                // Valida DVs
+                tamanho = cnpj.length - 2
+                numeros = cnpj.substring(0,tamanho);
+                digitos = cnpj.substring(tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                  soma += numeros.charAt(tamanho - i) * pos--;
+                  if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0))
+                    return false;
+
+                tamanho = tamanho + 1;
+                numeros = cnpj.substring(0,tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                  soma += numeros.charAt(tamanho - i) * pos--;
+                  if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1))
+                      return false;
+            }
+
+            return true;
+        }
+    });
+    </script>
+</html>

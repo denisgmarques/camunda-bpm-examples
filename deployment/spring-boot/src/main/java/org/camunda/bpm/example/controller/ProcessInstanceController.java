@@ -4,8 +4,10 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.runtime.VariableInstance;
+import org.camunda.bpm.engine.variable.VariableMap;
 import org.camunda.bpm.engine.variable.Variables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,21 +21,26 @@ public class ProcessInstanceController extends BaseApiRestController {
   
   @Autowired ProcessEngine engine;
   
-  @RequestMapping(value = "/process/start", method = RequestMethod.POST)
-  public @ResponseBody String startProcess(@RequestHeader(value="Referer", required = false) final String referer) {
+  @RequestMapping(value = "/process/start", method = RequestMethod.POST,
+          consumes = {"application/json", "application/xml"})
+//          produces = {"application/json", "application/xml"})
+  public @ResponseBody String startProcess(@RequestBody List<Map<String, String>> data, @RequestHeader(value="Referer", required = false) final String referer) {
     String uiBaseUrl="";
-
     if (referer != null) {
-       uiBaseUrl = referer.substring(0, referer.lastIndexOf('/')) + "/";
+        uiBaseUrl = referer.substring(0, referer.lastIndexOf('/')) + "/";
     }
+
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("base_uri", uiBaseUrl);
+
+    data.forEach(obj -> {
+        variables.put(obj.get("name"), obj.get("value"));
+    });
 
     ProcessInstance processInstance = engine
             .getRuntimeService()
             .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, String.valueOf(new Random().nextInt(9999999)),
-        Variables.createVariables()
-            //.putValue("var1", JSON("{}"))
-            .putValue("base_uri", uiBaseUrl)
-            );
+        Variables.fromMap(variables));
     
     return processInstance.getProcessInstanceId();
   }
